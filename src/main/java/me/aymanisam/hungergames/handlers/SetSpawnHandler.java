@@ -27,7 +27,7 @@ public class SetSpawnHandler {
     private final TeamVotingListener teamVotingListener;
     private final ConfigHandler configHandler;
     private final SignHandler signHandler;
-    private final SignClickListener signClickListener;
+    private SignClickListener signClickListener;
 	private CountDownHandler countDownHandler;
 
 	public FileConfiguration setSpawnConfig;
@@ -37,7 +37,7 @@ public class SetSpawnHandler {
     private File setSpawnFile;
     public static final Map<String, List<BukkitTask>> autoStartTasks = new HashMap<>();
 
-    public SetSpawnHandler(HungerGames plugin, LangHandler langHandler, ArenaHandler arenaHandler, ScoreBoardHandler scoreBoardHandler) {
+    public SetSpawnHandler(HungerGames plugin, LangHandler langHandler) {
         this.plugin = plugin;
         this.langHandler = langHandler;
 	    this.spawnPoints = new HashMap<>();
@@ -47,11 +47,15 @@ public class SetSpawnHandler {
         this.teamVotingListener = new TeamVotingListener(langHandler);
         this.configHandler = plugin.getConfigHandler();
 	    this.signHandler = new SignHandler(plugin);
-        this.signClickListener = new SignClickListener(plugin, langHandler, this, arenaHandler, scoreBoardHandler);
+        this.signClickListener = null;
     }
 
     public void setCountDownHandler(CountDownHandler countDownHandler) {
         this.countDownHandler = countDownHandler;
+    }
+
+    public void setSignClickListener(SignClickListener signClickListener) {
+        this.signClickListener = signClickListener;
     }
 
     public void createSetSpawnConfig(World world) {

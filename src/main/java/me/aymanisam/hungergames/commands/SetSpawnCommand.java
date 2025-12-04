@@ -2,6 +2,7 @@ package me.aymanisam.hungergames.commands;
 
 import me.aymanisam.hungergames.handlers.LangHandler;
 import me.aymanisam.hungergames.handlers.SetSpawnHandler;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,12 +39,12 @@ public class SetSpawnCommand implements CommandExecutor {
         ItemStack spawnPointStick = new ItemStack(Material.STICK);
         ItemMeta meta = spawnPointStick.getItemMeta();
         assert meta != null;
-        meta.setDisplayName(langHandler.getMessage(player, "setspawn.stick-name"));
+        meta.displayName(langHandler.getMessageComponent(player, "setspawn.stick-name"));
         spawnPointStick.setItemMeta(meta);
 
-        List<String> lore = new ArrayList<>();
-        lore.add(langHandler.getMessage(player, "setspawn.stick-left"));
-        meta.setLore(lore);
+        List<Component> lore = new ArrayList<>();
+        lore.add(langHandler.getMessageComponent(player, "setspawn.stick-left"));
+        meta.lore(lore);
         player.getInventory().addItem(spawnPointStick);
 
         setSpawnHandler.createSetSpawnConfig(player.getWorld());

@@ -42,7 +42,8 @@ public class SetSpawnListener implements Listener {
 
         List<String> worldSpawnPoints = setSpawnHandler.spawnPoints.computeIfAbsent(player.getWorld().getName(), k -> new ArrayList<>());
 
-        if (item != null && item.getType() == Material.STICK && item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getDisplayName().equals(langHandler.getMessage(player, "setspawn.stick-name"))) {
+        if (item != null && item.getType() == Material.STICK && item.hasItemMeta()
+                && Objects.equals(Objects.requireNonNull(item.getItemMeta()).displayName(), langHandler.getMessageComponent(player, "setspawn.stick-name"))) {
             if (!(player.hasPermission("hungergames.setspawn"))) {
                 player.sendMessage(langHandler.getMessage(player, "no-permission"));
                 return;
@@ -90,7 +91,8 @@ public class SetSpawnListener implements Listener {
     public void onItemHeldChange(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItem(event.getNewSlot());
-        if (item != null && item.getType() == Material.STICK && item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getDisplayName().equals(langHandler.getMessage(player, "setspawn.stick-name"))) {
+        if (item != null && item.getType() == Material.STICK && item.hasItemMeta()
+                && Objects.equals(Objects.requireNonNull(item.getItemMeta()).displayName(), langHandler.getMessageComponent(player, "setspawn.stick-name"))) {
             if (!(player.hasPermission("hungergames.setspawn"))) {
                 player.sendMessage(langHandler.getMessage(player, "no-permission"));
                 return;

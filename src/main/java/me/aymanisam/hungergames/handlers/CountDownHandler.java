@@ -2,11 +2,14 @@ package me.aymanisam.hungergames.handlers;
 
 import me.aymanisam.hungergames.HungerGames;
 import me.aymanisam.hungergames.listeners.TeamVotingListener;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +77,9 @@ public class CountDownHandler {
 
             for (Player player : world.getPlayers()) {
                 player.sendMessage(langHandler.getMessage(player, "team.voted-highest", highestVotedGameMode));
-                player.sendTitle("", langHandler.getMessage(player, "team.voted-highest", highestVotedGameMode), 5, 40, 10);
+                Component subtitle = langHandler.getMessageComponent(player, "team.voted-highest", highestVotedGameMode);
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(40L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 1.0f);
                 teamVotingListener.closeVotingInventory(player);
             }
@@ -148,8 +153,9 @@ public class CountDownHandler {
 
         BukkitTask task = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             for (Player player : world.getPlayers()) {
-                String message = langHandler.getMessage(player, messageKey, timeLeftSeconds);
-                player.sendTitle("", message, 5, 20, 10);
+                Component subtitle = langHandler.getMessageComponent(player, messageKey, timeLeftSeconds);
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1.0f, 1.0f);
             }
         }, delayInTicks);

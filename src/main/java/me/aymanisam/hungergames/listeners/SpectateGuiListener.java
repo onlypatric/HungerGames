@@ -1,6 +1,7 @@
 package me.aymanisam.hungergames.listeners;
 
 import me.aymanisam.hungergames.handlers.LangHandler;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -32,8 +33,8 @@ public class SpectateGuiListener implements Listener {
 
                 ItemMeta meta = clickedItem.getItemMeta();
 
-                if (meta != null && meta.hasDisplayName()) {
-                    String playerName = meta.getDisplayName();
+                if (meta != null && meta.displayName() != null) {
+                    String playerName = PlainTextComponentSerializer.plainText().serialize(meta.displayName());
                     Player target = Bukkit.getPlayerExact(playerName);
 
                     if (target == null) {

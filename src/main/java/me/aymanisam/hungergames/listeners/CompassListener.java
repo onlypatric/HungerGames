@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -45,7 +46,8 @@ public class CompassListener implements Listener {
         for (Player player : Bukkit.getOnlinePlayers()) {
             ItemStack itemInHand = player.getInventory().getItemInMainHand();
             if (itemInHand.getType() == Material.COMPASS) {
-                if (Objects.requireNonNull(itemInHand.getItemMeta()).getDisplayName().equals(langHandler.getMessage(player, "team.compass-teammate"))) {
+                ItemMeta meta = itemInHand.getItemMeta();
+                if (meta != null && Objects.equals(meta.displayName(), langHandler.getMessageComponent(player, "team.compass-teammate"))) {
                     Player nearestPlayer = compassHandler.findNearestTeammate(player, false, player.getWorld());
                     trackPlayer(player, nearestPlayer, false);
                 } else {
@@ -63,7 +65,7 @@ public class CompassListener implements Listener {
         Player player = event.getPlayer();
         ItemStack itemInHand = player.getInventory().getItemInMainHand();
 
-        if (itemInHand.getType() == Material.COMPASS && Objects.requireNonNull(itemInHand.getItemMeta()).getDisplayName().equals(langHandler.getMessage(player, "team.compass-teammate"))) {
+        if (itemInHand.getType() == Material.COMPASS && Objects.equals(itemInHand.getItemMeta() != null ? itemInHand.getItemMeta().displayName() : null, langHandler.getMessageComponent(player, "team.compass-teammate"))) {
             if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 Player nearestPlayer = compassHandler.findNearestTeammate(player, true, player.getWorld());
                 trackPlayer(player, nearestPlayer, true);

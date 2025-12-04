@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.Base64;
 import java.util.logging.Level;
@@ -54,7 +55,7 @@ public class DisplayStatsHandler {
 
 	private String getPlayerUUID(String username) {
 		try {
-			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
+			URL url = URI.create("https://api.mojang.com/users/profiles/minecraft/" + username).toURL();
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
@@ -72,7 +73,7 @@ public class DisplayStatsHandler {
 
 	private String getPlayerSkinUrl(String uuid) {
 		try {
-			URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid);
+			URL url = URI.create("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid).toURL();
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
@@ -92,7 +93,7 @@ public class DisplayStatsHandler {
 	}
 
 	private BufferedImage getPlayerHead(String imageUrl) {
-		try (InputStream in = new URL(imageUrl).openStream()) {
+		try (InputStream in = URI.create(imageUrl).toURL().openStream()) {
 			BufferedImage skin = ImageIO.read(in);
 			return skin.getSubimage(8,8, 8, 8);
 		} catch (Exception e) {

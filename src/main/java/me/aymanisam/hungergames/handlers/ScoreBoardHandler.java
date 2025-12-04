@@ -2,7 +2,6 @@ package me.aymanisam.hungergames.handlers;
 
 import fr.mrmicky.fastboard.FastBoard;
 import me.aymanisam.hungergames.HungerGames;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -25,17 +24,14 @@ public class ScoreBoardHandler {
         this.configHandler = plugin.getConfigHandler();
     }
 
-    private ChatColor getColor(int interval, int countdown) {
-        ChatColor color;
+    private String getColorCode(int interval, int countdown) {
         if (countdown <= interval / 3) {
-            color = ChatColor.RED;
+            return "§c";
         } else if (countdown <= 2 * interval / 3) {
-            color = ChatColor.YELLOW;
+            return "§e";
         } else {
-            color = ChatColor.GREEN;
+            return "§a";
         }
-
-        return color;
     }
 
     private String formatScore(Player player, String messageKey, int countdown, int interval) {
@@ -43,7 +39,7 @@ public class ScoreBoardHandler {
         int seconds = countdown % 60;
         String timeFormatted = String.format("%02d:%02d", minutes, seconds);
 
-        return langHandler.getMessage(player, messageKey, getColor(interval, countdown) + timeFormatted);
+        return langHandler.getMessage(player, messageKey, getColorCode(interval, countdown) + timeFormatted);
     }
 
     public void createBoard(Player player) {
@@ -82,23 +78,23 @@ public class ScoreBoardHandler {
         int pvpTimeLeft = (worldTimeLeft - gameTimeConfig) + pvpTimeConfig;
         int chestRefillTimeLeft = worldTimeLeft % chestRefillInterval;
         int supplyDropTimeLeft = worldTimeLeft % supplyDropInterval;
-        ChatColor borderColor;
+        String borderColorCode;
 
         if (borderStartSize == worldBorderSize) {
-            borderColor = ChatColor.GREEN;
+            borderColorCode = "§a";
         } else if (borderEndSize == worldBorderSize) {
-            borderColor = ChatColor.RED;
+            borderColorCode = "§c";
         } else {
-            borderColor = ChatColor.YELLOW;
+            borderColorCode = "§e";
         }
 
         List<String> lines = new ArrayList<>();
 
         lines.add("");
-        lines.add(langHandler.getMessage(board.getPlayer(), "score.alive", getColor(worldStartingPlayers, worldPlayersAliveSize).toString() + worldPlayersAliveSize));
+        lines.add(langHandler.getMessage(board.getPlayer(), "score.alive", getColorCode(worldStartingPlayers, worldPlayersAliveSize) + worldPlayersAliveSize));
         Map<Player, Integer> worldPlayerKills = playerKills.computeIfAbsent(world.getName(), k -> new HashMap<>());
-        lines.add(langHandler.getMessage(board.getPlayer(), "score.kills", ChatColor.RED + worldPlayerKills.computeIfAbsent(board.getPlayer(), k -> 0).toString()));
-        lines.add(langHandler.getMessage(board.getPlayer(), "score.border", borderColor.toString() + worldBorderSize));
+        lines.add(langHandler.getMessage(board.getPlayer(), "score.kills", "§c" + worldPlayerKills.computeIfAbsent(board.getPlayer(), k -> 0)));
+        lines.add(langHandler.getMessage(board.getPlayer(), "score.border", borderColorCode + worldBorderSize));
         lines.add("");
         lines.add(formatScore(board.getPlayer(), "score.time", worldTimeLeft, gameTimeConfig));
 
@@ -134,8 +130,8 @@ public class ScoreBoardHandler {
                     for (Player teamMember : team) {
                         if (!teamMember.equals(player)) {
                             String teammateName = teamMember.getName();
-                            ChatColor color = worldPlayersAlive.contains(teamMember) ? ChatColor.GREEN : ChatColor.RED;
-                            return langHandler.getMessage(player, "score.teammate", color + teammateName);
+                            String colorCode = worldPlayersAlive.contains(teamMember) ? "§a" : "§c";
+                            return langHandler.getMessage(player, "score.teammate", colorCode + teammateName);
                         }
                     }
                     break;

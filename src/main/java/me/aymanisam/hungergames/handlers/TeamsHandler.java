@@ -1,6 +1,7 @@
 package me.aymanisam.hungergames.handlers;
 
 import me.aymanisam.hungergames.HungerGames;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
@@ -95,7 +96,7 @@ public class TeamsHandler {
         double newMaxHealth = 20.0 * ratio;
         int newMaxHealthRounded = (int) Math.round(newMaxHealth);
         for (Player player : team) {
-            Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(newMaxHealthRounded);
+            Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(newMaxHealthRounded);
             player.setHealth(newMaxHealthRounded);
         }
     }
@@ -119,12 +120,12 @@ public class TeamsHandler {
         ItemStack item = new ItemStack(Material.COMPASS);
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setDisplayName(langHandler.getMessage(player, "team.compass-teammate"));
-        meta.addEnchant(Enchantment.DURABILITY, 1, true);
-        List<String> lore = new ArrayList<>();
-        lore.add(langHandler.getMessage(player, "team.compass-click"));
-        lore.add(langHandler.getMessage(player, "team.compass-shift-click"));
-        meta.setLore(lore);
+        meta.displayName(langHandler.getMessageComponent(player, "team.compass-teammate"));
+        meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+        List<Component> lore = new ArrayList<>();
+        lore.add(langHandler.getMessageComponent(player, "team.compass-click"));
+        lore.add(langHandler.getMessageComponent(player, "team.compass-shift-click"));
+        meta.lore(lore);
         item.setItemMeta(meta);
         player.getInventory().setItem(8, item);
     }

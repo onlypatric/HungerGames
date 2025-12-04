@@ -4,6 +4,7 @@ import me.aymanisam.hungergames.HungerGames;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -41,7 +42,8 @@ public class TipsHandler {
                         this.cancel();
                         return;
                     }
-                    if (itemInHand.getItemMeta() == null || !(itemInHand.getItemMeta().getDisplayName().equals(langHandler.getMessage(player, "team.compass-teammate")))) {
+                    ItemMeta meta = itemInHand.getItemMeta();
+                    if (meta == null || !Objects.equals(meta.displayName(), langHandler.getMessageComponent(player, "team.compass-teammate"))) {
                         plugin.adventure().player(player).sendActionBar(Component.text(langHandler.getMessage(player, "tips." + tipIndex)));
                     }
 

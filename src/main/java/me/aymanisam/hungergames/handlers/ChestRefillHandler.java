@@ -18,7 +18,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.io.File;
@@ -77,7 +76,7 @@ public class ChestRefillHandler {
                 .collect(Collectors.toList());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "deprecation"})
     public void refillInventory(List<Location> locations, String itemKey, YamlConfiguration itemsConfig, int minContent, int maxContent) {
 	    Random rand = new Random();
 
@@ -126,7 +125,19 @@ public class ChestRefillHandler {
                             int level = (levelObj != null) ? levelObj : 1;
                             boolean extended = itemMap.containsKey("extended") && (boolean) itemMap.get("extended");
                             assert potionMeta != null;
-                            potionMeta.setBasePotionData(new PotionData(PotionType.valueOf(potionType), extended, level > 1));
+                            PotionType baseType = PotionType.valueOf(potionType);
+                            if (extended && level <= 1) {
+                                try {
+                                    baseType = PotionType.valueOf("LONG_" + potionType);
+                                } catch (IllegalArgumentException ignored) {
+                                }
+                            } else if (!extended && level > 1) {
+                                try {
+                                    baseType = PotionType.valueOf("STRONG_" + potionType);
+                                } catch (IllegalArgumentException ignored) {
+                                }
+                            }
+                            potionMeta.setBasePotionType(baseType);
                             item.setItemMeta(potionMeta);
                         } else if (itemMap.containsKey("enchantments")) {
                             Material material = Material.getMaterial(type);
@@ -138,7 +149,10 @@ public class ChestRefillHandler {
                                     if (enchantObj instanceof Map<?, ?> enchantMap) {
                                         String enchantmentType = (String) enchantMap.get("type");
                                         int level = (int) enchantMap.get("level");
-                                        Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(enchantmentType.toLowerCase()));
+                                        Enchantment enchantment = Arrays.stream(Enchantment.values())
+                                                .filter(e -> e.getKey().getKey().equalsIgnoreCase(enchantmentType))
+                                                .findFirst()
+                                                .orElse(null);
                                         if (enchantment != null) {
                                             if (material == Material.ENCHANTED_BOOK) {
                                                 EnchantmentStorageMeta enchantmentStorageMeta = (EnchantmentStorageMeta) item.getItemMeta();

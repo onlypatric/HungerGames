@@ -45,15 +45,12 @@ public class SignSetCommand implements CommandExecutor {
         }
 
         Block targetBlock = player.getTargetBlockExact(10);
-        Location targetBlockLocation = null;
-        if (targetBlock != null) {
-            targetBlockLocation = targetBlock.getLocation();
-        }
-
-        if (targetBlockLocation == null || !(targetBlock.getState() instanceof Sign)) {
+        if (targetBlock == null || !(targetBlock.getState() instanceof Sign)) {
             sender.sendMessage(langHandler.getMessage(player, "game.invalid-target"));
             return true;
         }
+
+        Location targetBlockLocation = targetBlock.getLocation();
 
         if (checkNearbySigns(player, targetBlockLocation)) {
             return true;

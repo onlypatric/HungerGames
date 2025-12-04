@@ -28,7 +28,8 @@ public class ArenaSelectListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
-        if (item != null && item.getType() == Material.BLAZE_ROD && item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getDisplayName().equals(langHandler.getMessage(player, "arena.stick-name"))) {
+        if (item != null && item.getType() == Material.BLAZE_ROD && item.hasItemMeta()
+                && Objects.equals(Objects.requireNonNull(item.getItemMeta()).displayName(), langHandler.getMessageComponent(player, "arena.stick-name"))) {
             if (!(player.hasPermission("hungergames.select"))) {
                 player.sendMessage(langHandler.getMessage(player, "no-permission"));
                 return;
@@ -53,7 +54,8 @@ public class ArenaSelectListener implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings({"removal"})
     public void onPrepareAnvil(PrepareAnvilEvent event) {
-        event.getInventory().setRepairCost(0);
+        event.getInventory().setRepairCostAmount(0);
     }
 }

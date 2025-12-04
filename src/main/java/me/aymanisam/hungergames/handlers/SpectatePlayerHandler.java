@@ -1,5 +1,6 @@
 package me.aymanisam.hungergames.handlers;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,14 +24,14 @@ public class SpectatePlayerHandler {
         List<Player> worldPlayersAlive = playersAlive.computeIfAbsent(spectator.getWorld().getName(), k -> new ArrayList<>());
 
         int size = (int) Math.ceil(worldPlayersAlive.size() / 9.0) * 9;
-        Inventory gui = Bukkit.createInventory(null, size, langHandler.getMessage(spectator, "spectate.gui-message"));
+        Inventory gui = Bukkit.createInventory(null, size, langHandler.getMessageComponent(spectator, "spectate.gui-message"));
         for (int i = 0; i < worldPlayersAlive.size(); i++) {
             Player player = worldPlayersAlive.get(i);
             ItemStack playerItem = new ItemStack(Material.PLAYER_HEAD);
             SkullMeta meta = (SkullMeta) playerItem.getItemMeta();
             assert meta != null;
             meta.setOwningPlayer(player);
-            meta.setDisplayName(player.getName());
+            meta.displayName(Component.text(player.getName()));
             playerItem.setItemMeta(meta);
 
             gui.setItem(i, playerItem);

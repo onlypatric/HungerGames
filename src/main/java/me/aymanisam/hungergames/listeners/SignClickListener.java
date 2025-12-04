@@ -2,6 +2,9 @@ package me.aymanisam.hungergames.listeners;
 
 import me.aymanisam.hungergames.HungerGames;
 import me.aymanisam.hungergames.handlers.*;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -55,7 +58,9 @@ public class SignClickListener implements Listener {
 
             if (block.getState() instanceof Sign sign) {
                 for (String worldName : hgWorldNames) {
-                    if (sign.getSide(Side.FRONT).getLine(1).contains(worldName)) {
+                    SignSide frontSide = sign.getSide(Side.FRONT);
+                    String line = PlainTextComponentSerializer.plainText().serialize(frontSide.line(1));
+                    if (line.contains(worldName)) {
                         if (lastInteractTime.containsKey(player) && (currentTime - lastInteractTime.get(player)) < 5000) {
                             return; // Ignore the event if it's within the cooldown period
                         }
@@ -146,23 +151,31 @@ public class SignClickListener implements Listener {
             List<Player> worldPlayersAlive = playersAlive.computeIfAbsent(worldName, k -> new ArrayList<>());
 
             if (location.getBlock().getState() instanceof Sign sign) {
-                sign.setEditable(false);
+                sign.setWaxed(true);
                 SignSide frontSide = sign.getSide(Side.FRONT);
                 SignSide backSide = sign.getSide(Side.BACK);
-                frontSide.setLine(0, ChatColor.BOLD + "Join");
-                backSide.setLine(0, ChatColor.BOLD + "Join");
-                frontSide.setLine(1, ChatColor.BOLD + worldName);
-                backSide.setLine(1, ChatColor.BOLD + worldName);
+                Component title = Component.text("Join").decorate(TextDecoration.BOLD);
+                Component worldComponent = Component.text(worldName).decorate(TextDecoration.BOLD);
+
+                frontSide.line(0, title);
+                backSide.line(0, title);
+                frontSide.line(1, worldComponent);
+                backSide.line(1, worldComponent);
+
                 if (isGameStartingOrStarted(worldName)) {
-                    frontSide.setLine(2, ChatColor.BOLD + "In Progress");
-                    backSide.setLine(2, ChatColor.BOLD + "In Progress");
-                    frontSide.setLine(3, ChatColor.BOLD + "" + worldPlayersAlive.size() + " Alive");
-                    backSide.setLine(3, ChatColor.BOLD + "" + worldPlayersAlive.size() + " Alive");
+                    Component inProgress = Component.text("In Progress").decorate(TextDecoration.BOLD);
+                    Component aliveLine = Component.text(worldPlayersAlive.size() + " Alive").decorate(TextDecoration.BOLD);
+                    frontSide.line(2, inProgress);
+                    backSide.line(2, inProgress);
+                    frontSide.line(3, aliveLine);
+                    backSide.line(3, aliveLine);
                 } else {
-                    frontSide.setLine(2, ChatColor.BOLD + "Waiting");
-                    backSide.setLine(2, ChatColor.BOLD + "Waiting");
-                    frontSide.setLine(3, ChatColor.BOLD + "[" + worldPlayersWaitingSize + "/" + worldSpawnPointSize + "]");
-                    backSide.setLine(3, ChatColor.BOLD + "[" + worldPlayersWaitingSize + "/" + worldSpawnPointSize + "]");
+                    Component waiting = Component.text("Waiting").decorate(TextDecoration.BOLD);
+                    Component waitingCount = Component.text("[" + worldPlayersWaitingSize + "/" + worldSpawnPointSize + "]").decorate(TextDecoration.BOLD);
+                    frontSide.line(2, waiting);
+                    backSide.line(2, waiting);
+                    frontSide.line(3, waitingCount);
+                    backSide.line(3, waitingCount);
                 }
                 sign.update();
             }

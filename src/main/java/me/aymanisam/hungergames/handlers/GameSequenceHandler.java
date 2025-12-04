@@ -5,6 +5,8 @@ import me.aymanisam.hungergames.listeners.CompassListener;
 import me.aymanisam.hungergames.listeners.SignClickListener;
 import me.aymanisam.hungergames.stats.DatabaseHandler;
 import me.aymanisam.hungergames.stats.PlayerStatsHandler;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -17,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.time.Duration;
 import java.util.*;
 
 import static me.aymanisam.hungergames.HungerGames.*;
@@ -41,6 +44,7 @@ public class GameSequenceHandler {
     private final TeamsHandler teamsHandler;
     private final SignHandler signHandler;
     private final SignClickListener signClickListener;
+    @SuppressWarnings("unused")
     private final DatabaseHandler databaseHandler;
 
     public Map<String, Integer> gracePeriodTaskId = new HashMap<>();
@@ -70,6 +74,7 @@ public class GameSequenceHandler {
         this.databaseHandler = new DatabaseHandler(plugin);
     }
 
+    @SuppressWarnings("deprecation")
     public void startGame(World world) {
         gameStarted.put(world.getName(), true);
         gameStarting.put(world.getName(), false);
@@ -87,7 +92,9 @@ public class GameSequenceHandler {
         worldBorderHandler.startWorldBorder(world);
 
         for (Player player : world.getPlayers()) {
-            player.sendTitle("", langHandler.getMessage(player, "game.start"), 5, 20, 10);
+            Component subtitle = langHandler.getMessageComponent(player, "game.start");
+            Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+            plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
             player.sendMessage(langHandler.getMessage(player, "game.grace-start"));
         }
 
@@ -96,7 +103,9 @@ public class GameSequenceHandler {
             world.setPVP(true);
             for (Player player : world.getPlayers()) {
                 player.sendMessage(langHandler.getMessage(player, "game.grace-end"));
-                player.sendTitle("", langHandler.getMessage(player, "game.grace-end"), 5, 20, 10);
+                Component subtitle = langHandler.getMessageComponent(player, "game.grace-end");
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1.0f, 1.0f);
             }
         }, gracePeriod * 20L);
@@ -137,7 +146,10 @@ public class GameSequenceHandler {
             if (configHandler.getWorldConfig(world).getBoolean("bedrock-buff.enabled") && player.getName().startsWith(".")) {
                 List<String> effectNames = configHandler.getWorldConfig(world).getStringList("bedrock-buff.effects");
                 for (String effectName : effectNames) {
-                    PotionEffectType effectType = PotionEffectType.getByName(effectName);
+                    PotionEffectType effectType = Arrays.stream(PotionEffectType.values())
+                            .filter(type -> type.getKey().getKey().equalsIgnoreCase(effectName))
+                            .findFirst()
+                            .orElse(null);
                     if (effectType != null) {
                         player.addPotionEffect(new PotionEffect(effectType, 200000, 1, true, false));
                     }
@@ -267,7 +279,9 @@ public class GameSequenceHandler {
         for (Player player : world.getPlayers()) {
             if (winner != null) {
                 player.sendMessage(langHandler.getMessage(player, "game.winner", winner.getName()));
-                player.sendTitle("", langHandler.getMessage(player, "game.winner", winner.getName()), 5, 20, 10);
+                Component subtitle = langHandler.getMessageComponent(player, "game.winner", winner.getName());
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
             } else {
                 player.sendMessage(langHandler.getMessage(player, "game.team-no-winner"));
@@ -298,10 +312,14 @@ public class GameSequenceHandler {
 
         for (Player player : world.getPlayers()) {
             if (winner != null) {
-                player.sendTitle("", langHandler.getMessage(player, "game.solo-kills", winner.getName()), 5, 20, 10);
+                Component subtitle = langHandler.getMessageComponent(player, "game.solo-kills", winner.getName());
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.sendMessage(langHandler.getMessage(player, "game.solo-kills", winner.getName()));
             } else {
-                player.sendTitle("", langHandler.getMessage(player, "game.team-no-winner"), 5, 20, 10);
+                Component subtitle = langHandler.getMessageComponent(player, "game.team-no-winner");
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.sendMessage(langHandler.getMessage(player, "game.team-no-winner"));
             }
 
@@ -317,7 +335,9 @@ public class GameSequenceHandler {
             String titleKey = getTitleKey(winReason);
 
             for (Player player : world.getPlayers()) {
-                player.sendTitle("", langHandler.getMessage(player, messageKey, allNames), 5, 20, 10);
+                Component subtitle = langHandler.getMessageComponent(player, messageKey, allNames);
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.sendMessage(langHandler.getMessage(player, titleKey, allNames));
                 player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
             }
@@ -524,7 +544,9 @@ public class GameSequenceHandler {
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 for (Player player : players) {
                     player.sendMessage(langHandler.getMessage(player, "game.join-instruction"));
-                    player.sendTitle("", langHandler.getMessage(player, "game.join-instruction"), 5, 20, 10);
+                    Component subtitle = langHandler.getMessageComponent(player, "game.join-instruction");
+                    Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                    plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 }
             }, 100L);
         }

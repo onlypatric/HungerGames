@@ -1,15 +1,17 @@
 package me.aymanisam.hungergames.listeners;
 
+import io.papermc.paper.event.player.AsyncChatEvent;
 import me.aymanisam.hungergames.handlers.TeamsHandler;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static me.aymanisam.hungergames.HungerGames.isGameStartingOrStarted;
 import static me.aymanisam.hungergames.handlers.TeamsHandler.teams;
@@ -21,8 +23,8 @@ public class TeamChatListener implements Listener {
         this.teamsHandler = teamsHandler;
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerChat(AsyncChatEvent event) {
         Player sender = event.getPlayer();
 
         if ((isGameStartingOrStarted(sender.getWorld().getName())) && isPlayerInAnyTeam(sender, sender.getWorld()) && teamsHandler.isChatModeEnabled(sender)) {
@@ -30,14 +32,10 @@ public class TeamChatListener implements Listener {
 
             teammates.add(sender);
 
-            event.setCancelled(true);
-
-            String message = event.getMessage();
-            String format = event.getFormat();
-
-            for (Player teammate : teammates) {
-                teammate.sendMessage(String.format(format, sender.getDisplayName(), message));
-            }
+            Set<org.bukkit.entity.Player> viewers = new HashSet<>();
+            viewers.addAll(teammates);
+            event.viewers().clear();
+            event.viewers().addAll(viewers);
         }
     }
 

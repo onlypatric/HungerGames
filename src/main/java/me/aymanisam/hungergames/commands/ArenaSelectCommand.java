@@ -1,6 +1,7 @@
 package me.aymanisam.hungergames.commands;
 
 import me.aymanisam.hungergames.handlers.LangHandler;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,12 +36,12 @@ public class ArenaSelectCommand implements CommandExecutor {
         ItemStack arenaSelector = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = arenaSelector.getItemMeta();
         assert meta != null;
-        meta.setDisplayName(langHandler.getMessage(player, "arena.stick-name"));
+        meta.displayName(langHandler.getMessageComponent(player, "arena.stick-name"));
 
-        List<String> lore = new ArrayList<>();
-        lore.add(langHandler.getMessage(player, "arena.stick-left"));
-        lore.add(langHandler.getMessage(player, "arena.stick-right"));
-        meta.setLore(lore);
+        List<Component> lore = new ArrayList<>();
+        lore.add(langHandler.getMessageComponent(player, "arena.stick-left"));
+        lore.add(langHandler.getMessageComponent(player, "arena.stick-right"));
+        meta.lore(lore);
         arenaSelector.setItemMeta(meta);
 
         player.getInventory().addItem(arenaSelector);

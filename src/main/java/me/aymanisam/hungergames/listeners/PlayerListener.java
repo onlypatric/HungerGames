@@ -4,6 +4,8 @@ import me.aymanisam.hungergames.HungerGames;
 import me.aymanisam.hungergames.handlers.*;
 import me.aymanisam.hungergames.stats.DatabaseHandler;
 import me.aymanisam.hungergames.stats.PlayerStatsHandler;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -17,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -56,7 +59,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        event.setQuitMessage(null);
+        event.quitMessage(null);
 
         resetPlayerHandler.resetPlayer(player, player.getWorld());
 
@@ -162,7 +165,7 @@ public class PlayerListener implements Listener {
         } else {
             plugin.getLogger().log(Level.SEVERE, "Could not find lobbyWorld [ " + lobbyWorldName + "]");
         }
-        event.setJoinMessage(null);
+        event.joinMessage(null);
 
         if (configHandler.getPluginSettings().getBoolean("database.enabled")) {
 			plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -188,6 +191,7 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("deprecation")
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         World world = player.getWorld();
@@ -201,7 +205,7 @@ public class PlayerListener implements Listener {
             if (configHandler.getWorldConfig(world).getInt("players-per-team") == 1) {
                 worldPlayersPlacement.add(player);
             }
-            event.setDeathMessage(null);
+            event.deathMessage(null);
 
             player.sendMessage(langHandler.getMessage(player, "game.placed", worldPlayersAlive.size() + 1));
 
@@ -236,7 +240,9 @@ public class PlayerListener implements Listener {
         if (configHandler.getPluginSettings().getBoolean("spectating")) {
             if (gameStarted.getOrDefault(world.getName(), false)) {
                 player.setGameMode(GameMode.SPECTATOR);
-                player.sendTitle("", langHandler.getMessage(player, "spectate.spectating-player"), 5, 20, 10);
+                Component subtitle = langHandler.getMessageComponent(player, "spectate.spectating-player");
+                Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+                plugin.adventure().player(player).showTitle(Title.title(Component.empty(), subtitle, times));
                 player.sendMessage(langHandler.getMessage(player, "spectate.message"));
                 Map<Player, Location> worldDeathLocations = deathLocations.computeIfAbsent(world.getName(), k -> new HashMap<>());
                 worldDeathLocations.put(player, player.getLocation());
@@ -264,7 +270,10 @@ public class PlayerListener implements Listener {
                 String effectName = (String) effectMap.get("effect");
                 int duration = (int) effectMap.get("duration");
                 int level = (int) effectMap.get("level");
-                PotionEffectType effectType = PotionEffectType.getByName(effectName);
+                PotionEffectType effectType = Arrays.stream(PotionEffectType.values())
+                        .filter(type -> type.getKey().getKey().equalsIgnoreCase(effectName))
+                        .findFirst()
+                        .orElse(null);
                 if (effectType != null) {
                     killer.addPotionEffect(new PotionEffect(effectType, duration, level));
                 }
@@ -280,8 +289,8 @@ public class PlayerListener implements Listener {
         }
 
         Location location = player.getLocation();
-        world.spawnParticle(Particle.EXPLOSION_LARGE, player.getLocation(), 10);
-        world.spawnParticle(Particle.REDSTONE, location, 50, new Particle.DustOptions(Color.RED, 10f));
+        world.spawnParticle(Particle.EXPLOSION, player.getLocation(), 10);
+        world.spawnParticle(Particle.DUST, location, 50, new Particle.DustOptions(Color.RED, 10f));
         world.playSound(player.getLocation(), Sound.ENTITY_WITHER_DEATH, 0.4f, 1.0f);
 
         if (gameStarted.getOrDefault(world.getName(), false)) {

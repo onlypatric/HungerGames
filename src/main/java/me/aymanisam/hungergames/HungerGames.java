@@ -85,7 +85,7 @@ public final class HungerGames extends JavaPlugin {
         getServer().getPluginManager().registerEvents(teamVotingListener, this);
         ArenaHandler arenaHandler = new ArenaHandler(this, langHandler);
         ScoreBoardHandler scoreBoardHandler = new ScoreBoardHandler(this, langHandler);
-        SetSpawnHandler setSpawnHandler = new SetSpawnHandler(this, langHandler, arenaHandler, scoreBoardHandler);
+        SetSpawnHandler setSpawnHandler = new SetSpawnHandler(this, langHandler);
         CompassHandler compassHandler = new CompassHandler(this, langHandler);
         CompassListener compassListener = new CompassListener(this, langHandler, compassHandler);
         TeamsHandler teamsHandler = new TeamsHandler(this, langHandler);
@@ -132,6 +132,7 @@ public final class HungerGames extends JavaPlugin {
 
         SignClickListener signClickListener = new SignClickListener(this, langHandler, setSpawnHandler, arenaHandler, scoreBoardHandler);
         getServer().getPluginManager().registerEvents(signClickListener, this);
+        setSpawnHandler.setSignClickListener(signClickListener);
 
         PlayerListener playerListener = new PlayerListener(this, langHandler, setSpawnHandler, scoreBoardHandler);
         getServer().getPluginManager().registerEvents(playerListener, this);
@@ -160,7 +161,7 @@ public final class HungerGames extends JavaPlugin {
         int latestHyphenIndex = latestVersionString.indexOf('-');
         String latestVersion = (latestHyphenIndex != -1) ? latestVersionString.substring(0, latestHyphenIndex) : latestVersionString;
 
-        String currentVersionString = this.getDescription().getVersion();
+        String currentVersionString = this.getPluginMeta().getVersion();
         int currentHyphenIndex = currentVersionString.indexOf('-');
         String currentVersion = (currentHyphenIndex != -1) ? currentVersionString.substring(0, currentHyphenIndex) : currentVersionString;
 

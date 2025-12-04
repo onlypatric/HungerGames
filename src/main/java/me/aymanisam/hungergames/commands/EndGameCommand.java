@@ -4,6 +4,8 @@ import me.aymanisam.hungergames.HungerGames;
 import me.aymanisam.hungergames.handlers.CountDownHandler;
 import me.aymanisam.hungergames.handlers.GameSequenceHandler;
 import me.aymanisam.hungergames.handlers.LangHandler;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
@@ -12,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,8 +73,10 @@ public class EndGameCommand implements CommandExecutor {
             return true;
         }
 
-        for (Player onlinePlayer : (world.getPlayers())) {
-            onlinePlayer.sendTitle("", langHandler.getMessage(onlinePlayer, "game.ended"), 5, 20, 10);
+        for (Player onlinePlayer : world.getPlayers()) {
+            Component subtitle = langHandler.getMessageComponent(onlinePlayer, "game.ended");
+            Title.Times times = Title.Times.times(Duration.ofMillis(5L * 50L), Duration.ofMillis(20L * 50L), Duration.ofMillis(10L * 50L));
+            plugin.adventure().player(onlinePlayer).showTitle(Title.title(Component.empty(), subtitle, times));
         }
 
         Map<String, Player> worldSpawnPointMap = spawnPointMap.computeIfAbsent(world.getName(), k -> new HashMap<>());
@@ -86,7 +91,7 @@ public class EndGameCommand implements CommandExecutor {
 
             for (Player p : world.getPlayers()) {
                 if (worldSpawnPointMap.containsValue(p)) {
-                    Objects.requireNonNull(p.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(20.0);
+                    Objects.requireNonNull(p.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(20.0);
                 }
             }
             return true;
