@@ -1,4 +1,15 @@
 # Project exclude paths
 /.gradle/
 /.idea/
+/gradle/
 /build/
+
+# Maven build output
+/target/
+/dependency-reduced-pom.xml
+
+# IDE / editor settings
+/.vscode/
+
+# OS / misc
+.DS_Store
