@@ -82,6 +82,13 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <useModulePath>false</useModulePath>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <repositories>
@@ -104,6 +111,10 @@
     <repository>
       <id>codemc-snapshots</id>
       <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+    </repository>
+    <repository>
+      <id>codemc-public</id>
+      <url>https://repo.codemc.io/repository/maven-public/</url>
     </repository>
     <repository>
       <id>extendedclip-repo</id>
@@ -129,11 +140,59 @@
       <version>2.11.6</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit-jupiter-api</artifactId>
+          <groupId>org.junit.jupiter</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>junit-jupiter-params</artifactId>
+          <groupId>org.junit.jupiter</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>junit-jupiter-engine</artifactId>
+          <groupId>org.junit.jupiter</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.mockbukkit.mockbukkit</groupId>
+      <artifactId>mockbukkit-v1.21</artifactId>
+      <version>4.0.0</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>adventure-platform-bungeecord</artifactId>
+          <groupId>net.kyori</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>byte-buddy</artifactId>
+          <groupId>net.bytebuddy</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hamcrest</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>maven-resolver-connector-basic</artifactId>
+          <groupId>org.apache.maven.resolver</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>maven-resolver-transport-http</artifactId>
+          <groupId>org.apache.maven.resolver</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.target>21</maven.compiler.target>
-    <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>21</maven.compiler.target>
     <paper.api.version>1.21.4</paper.api.version>
+    <maven.compiler.source>21</maven.compiler.source>
   </properties>
 </project>
