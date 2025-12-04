@@ -35,6 +35,16 @@ sed -i 's/^  enabled:.*/  enabled: false/' plugins/HungerGames/settings.yml || t
 # Per-world config for arena1: start from default config.yml
 cp ../src/main/resources/config.yml plugins/HungerGames/arena1/config.yml
 
+# Make the game shorter and enable auto-start so CI actually runs a full match
+sed -i 's/^game-time:.*/game-time: 120/' plugins/HungerGames/arena1/config.yml
+sed -i 's/^countdown:.*/countdown: 10/' plugins/HungerGames/arena1/config.yml
+sed -i 's/^grace-period:.*/grace-period: 5/' plugins/HungerGames/arena1/config.yml
+sed -i 's/^min-players:.*/min-players: 10/' plugins/HungerGames/arena1/config.yml
+sed -i 's/^auto-start:$/auto-start:/' plugins/HungerGames/arena1/config.yml || true
+sed -i 's/^  enabled:.*/  enabled: true/' plugins/HungerGames/arena1/config.yml
+sed -i 's/^  players:.*/  players: 10/' plugins/HungerGames/arena1/config.yml
+sed -i 's/^  delay:.*/  delay: 5/' plugins/HungerGames/arena1/config.yml
+
 # Minimal arena region around spawn
 cat > plugins/HungerGames/arena1/arena.yml << 'EOF'
 region:
@@ -93,15 +103,7 @@ echo "Running full-protocol bot simulation (50 bots) and starting a game..."
 MC_HOST=127.0.0.1 MC_PORT=25565 MC_BOT_COUNT=50 node ../.github/scripts/run-bot-simulation.cjs &
 BOT_PID=$!
 
-# Give bots time to join and run /hg join arena1
-sleep 20
-
-# Start the game in arena1 from the console
-if kill -0 "$SERVER_PID" 2>/dev/null; then
-  printf "hg start arena1\n" > "/proc/$SERVER_PID/fd/0" || true
-fi
-
-# Wait for bots to finish their run
+# Wait for bots to finish their run (they stay ~30 seconds each)
 wait "$BOT_PID"
 
 echo "Bot simulation finished; stopping server."

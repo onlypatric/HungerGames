@@ -40,6 +40,8 @@ public class PlayerListener implements Listener {
 	private final DatabaseHandler databaseHandler;
     private final ResetPlayerHandler resetPlayerHandler;
 
+    private static boolean lobbyWorldMissingLogged = false;
+
 	private final Map<String, Map<Player, Location>> deathLocations = new HashMap<>();
     private final Map<Player, Set<Player>> playerDamagers = new HashMap<>();
     public static final Map<String, Map<Player, Integer>> playerKills = new HashMap<>();
@@ -162,8 +164,9 @@ public class PlayerListener implements Listener {
         World lobbyWorld = Bukkit.getWorld(lobbyWorldName);
         if (lobbyWorld != null) {
             player.teleport(lobbyWorld.getSpawnLocation());
-        } else {
+        } else if (!lobbyWorldMissingLogged) {
             plugin.getLogger().log(Level.SEVERE, "Could not find lobbyWorld [ " + lobbyWorldName + "]");
+            lobbyWorldMissingLogged = true;
         }
         event.joinMessage(null);
 
