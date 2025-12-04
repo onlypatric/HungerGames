@@ -15,6 +15,14 @@ mkdir -p server/plugins
 cp target/Hungergames-*.jar server/plugins/
 cd server
 
+cat > server.properties << 'EOF'
+online-mode=false
+server-port=25565
+enable-rcon=false
+motd=HungerGames CI
+level-name=world
+EOF
+
 echo "eula=true" > eula.txt
 
 java -Xmx2G -jar ../paper.jar --nogui &
@@ -45,8 +53,12 @@ if grep -q "Error occurred while enabling HungerGames" logs/latest.log; then
   kill "$SERVER_PID" || true
   exit 1
 fi
-
 echo "HungerGames plugin appears to have enabled successfully."
+
+echo "Running full-protocol bot simulation (50 bots)..."
+MC_HOST=127.0.0.1 MC_PORT=25565 MC_BOT_COUNT=50 node ../.github/scripts/run-bot-simulation.cjs
+
+echo "Bot simulation finished successfully."
 
 kill "$SERVER_PID" || true
 
