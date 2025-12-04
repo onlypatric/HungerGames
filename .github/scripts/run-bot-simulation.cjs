@@ -26,7 +26,42 @@ async function createBot(index) {
       clearTimeout(timeout);
       // Join the configured arena
       bot.chat('/hg join arena1');
-      // Stay connected for a while so the game can start and run
+
+      // After joining, exercise a few HungerGames-related commands and some movement
+      setTimeout(() => {
+        bot.chat('/hg stats');
+      }, 3000);
+
+      setTimeout(() => {
+        bot.chat('/hg teamchat');
+      }, 6000);
+
+      setTimeout(() => {
+        bot.chat('CI bot ready for HungerGames!');
+      }, 9000);
+
+      // Simple movement pattern inside the arena
+      setTimeout(() => {
+        bot.setControlState('forward', true);
+        bot.setControlState('jump', true);
+      }, 4000);
+
+      setTimeout(() => {
+        bot.setControlState('jump', false);
+        bot.setControlState('left', true);
+      }, 9000);
+
+      setTimeout(() => {
+        bot.setControlState('left', false);
+        bot.setControlState('right', true);
+      }, 14000);
+
+      setTimeout(() => {
+        bot.setControlState('forward', false);
+        bot.setControlState('right', false);
+      }, 20000);
+
+      // Stay connected long enough for countdown + early game, then disconnect
       setTimeout(() => {
         bot.end();
         resolve();
