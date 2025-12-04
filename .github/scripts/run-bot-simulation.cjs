@@ -2,6 +2,17 @@
 
 const mineflayer = require('mineflayer');
 
+// Swallow the specific prismarine-chat error that occurs against modern
+// Paper chat formats so that bots can continue to run in CI.
+process.on('uncaughtException', (err) => {
+  if (err && typeof err.message === 'string' && err.message.includes('unknown chat format code')) {
+    console.error('Ignoring chat parse error:', err.message);
+    return;
+  }
+  console.error('Uncaught exception in bot process:', err);
+  process.exit(1);
+});
+
 const host = process.env.MC_HOST || '127.0.0.1';
 const port = Number(process.env.MC_PORT || 25565);
 const botCount = Number(process.env.MC_BOT_COUNT || 50);
@@ -15,9 +26,7 @@ async function createBot(index) {
       port,
       username,
       version: false, // let mineflayer detect
-      // Disable internal plugins (including chat parsing) to avoid
-      // prismarine-chat incompatibilities with modern Paper chat formats.
-      loadInternalPlugins: false,
+      // Use default internal plugins so spawn/movement/commands work.
     });
 
     const timeout = setTimeout(() => {
