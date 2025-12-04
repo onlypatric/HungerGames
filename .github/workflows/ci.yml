@@ -34,54 +34,7 @@ jobs:
         run: mvn -B -DskipTests package
 
       - name: Download Paper 1.21.4
-        run: |
-          PAPER_VERSION=1.21.4
-          BUILD=$(python3 << 'PY'
-import json, urllib.request
-version = "1.21.4"
-url = f"https://api.papermc.io/v2/projects/paper/versions/{version}"
-with urllib.request.urlopen(url) as resp:
-    data = json.load(resp)
-print(data["builds"][-1])
-PY
-          )
-          echo "Using Paper build ${BUILD}"
-          curl -s -L "https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION}/builds/${BUILD}/downloads/paper-${PAPER_VERSION}-${BUILD}.jar" -o paper.jar
-          ls -lh paper.jar
+        run: bash .github/scripts/download-paper.sh 1.21.4
 
       - name: Run Paper server with HungerGames (smoke test)
-        run: |
-          set -e
-          mkdir -p server/plugins
-          cp target/Hungergames-*.jar server/plugins/
-          cd server
-          echo "eula=true" > eula.txt
-          java -Xmx2G -jar ../paper.jar --nogui &
-          SERVER_PID=$!
-          echo "Waiting for Paper server to start..."
-          # Wait up to 2 minutes for the server to report it is done starting
-          for i in {1..24}; do
-            if [ -f logs/latest.log ] && grep -q "Done (" logs/latest.log; then
-              echo "Server started successfully"
-              break
-            fi
-            if ! kill -0 "$SERVER_PID" 2>/dev/null; then
-              echo "Server process exited before startup completed"
-              exit 1
-            fi
-            sleep 5
-          done
-          if ! kill -0 "$SERVER_PID" 2>/dev/null; then
-            echo "Server did not reach running state in time"
-            exit 1
-          fi
-          # Check log for plugin enable errors
-          if grep -q "Error occurred while enabling HungerGames" logs/latest.log; then
-            echo "HungerGames plugin failed to enable:"
-            grep "HungerGames" logs/latest.log || true
-            kill "$SERVER_PID" || true
-            exit 1
-          fi
-          echo "HungerGames plugin appears to have enabled successfully."
-          # Stop server process
-          kill "$SERVER_PID" || true
+        run: bash .github/scripts/run-paper-smoke-test.sh
