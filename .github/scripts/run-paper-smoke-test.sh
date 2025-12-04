@@ -20,6 +20,7 @@ online-mode=false
 server-port=25565
 enable-rcon=false
 motd=HungerGames CI
+max-players=80
 level-name=arena1
 EOF
 
@@ -106,4 +107,3 @@ wait "$BOT_PID"
 echo "Bot simulation finished; stopping server."
 
 kill "$SERVER_PID" || true
-
