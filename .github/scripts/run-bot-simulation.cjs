@@ -15,13 +15,10 @@ async function createBot(index) {
       port,
       username,
       version: false, // let mineflayer detect
+      // Disable internal plugins (including chat parsing) to avoid
+      // prismarine-chat incompatibilities with modern Paper chat formats.
+      loadInternalPlugins: false,
     });
-
-    // Work around mineflayer/prismarine-chat incompatibility with 1.21.4 formatted chat
-    // by detaching the internal chat packet listener – we don't need parsed chat in CI.
-    if (bot._client) {
-      bot._client.removeAllListeners('chat');
-    }
 
     const timeout = setTimeout(() => {
       bot.end();
