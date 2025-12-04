@@ -24,12 +24,13 @@ async function createBot(index) {
 
     bot.once('spawn', () => {
       clearTimeout(timeout);
-      // Basic interaction: ask for HungerGames command usage
-      bot.chat('/hg');
+      // Join the configured arena
+      bot.chat('/hg join arena1');
+      // Stay connected for a while so the game can start and run
       setTimeout(() => {
         bot.end();
         resolve();
-      }, 2000);
+      }, 30000);
     });
 
     bot.on('kicked', (reason) => {
@@ -78,4 +79,3 @@ main().catch((err) => {
   console.error('Bot simulation failed:', err.message || err);
   process.exit(1);
 });
-
