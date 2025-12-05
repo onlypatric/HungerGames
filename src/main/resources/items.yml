@@ -1,61 +1,18 @@
-#Link for getting item names https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-#Link for getting potion names https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionType.html
-#Link for getting enchantment names https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html
+# Link for item names: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+# Potions: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionType.html
+# Enchantments: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html
 
+# Tier 1 – basic survival gear (wood/stone, leather/chain, simple food/utility)
 chest-items:
   - type: WOODEN_SWORD
     amount: 1
-    weight: 2
-
-  - type: CHAINMAIL_HELMET
-    amount: 1
-    weight: 2
-
-  - type: CHAINMAIL_CHESTPLATE
-    amount: 1
-    weight: 2
-
-  - type: CHAINMAIL_LEGGINGS
-    amount: 1
-    weight: 2
-
-  - type: CHAINMAIL_BOOTS
-    amount: 1
-    weight: 2
-
-  - type: LEATHER_HELMET
-    amount: 1
-    weight: 1
-
-  - type: LEATHER_CHESTPLATE
-    amount: 1
-    weight: 1
-
-  - type: LEATHER_LEGGINGS
-    amount: 1
-    weight: 1
-
-  - type: LEATHER_BOOTS
-    amount: 1
-    weight: 1
-
-  - type: GOLDEN_HELMET
-    amount: 1
-    weight: 1
-
-  - type: GOLDEN_CHESTPLATE
-    amount: 1
-    weight: 1
-
-  - type: GOLDEN_LEGGINGS
-    amount: 1
-    weight: 1
-
-  - type: GOLDEN_BOOTS
-    amount: 1
-    weight: 1
+    weight: 3
 
   - type: STONE_SWORD
+    amount: 1
+    weight: 3
+
+  - type: WOODEN_AXE
     amount: 1
     weight: 2
 
@@ -63,95 +20,11 @@ chest-items:
     amount: 1
     weight: 2
 
-  - type: SHIELD
-    amount: 1
-    weight: 2
-
-  - type: BOW
-    amount: 1
-    weight: 2
-
-  - type: CROSSBOW
-    amount: 1
-    weight: 2
-
-  - type: ARROW
-    amount:
-      min: 8
-      max: 16
-    weight: 2
-
-  - type: MILK_BUCKET
-    amount: 1
-    weight: 2
-
-  - type: COOKED_PORKCHOP
-    amount: 4
-    weight: 3
-
-  - type: COOKED_BEEF
-    amount: 4
-    weight: 3
-
-  - type: BREAD
-    amount: 4
-    weight: 3
-
-  - type: COMPASS
-    amount: 1
-    weight: 2
-
-  - type: ENDER_PEARL
+  - type: WOODEN_PICKAXE
     amount: 1
     weight: 2
 
   - type: STONE_PICKAXE
-    amount: 1
-    weight: 1
-
-  - type: FISHING_ROD
-    amount: 1
-    weight: 1
-
-  - type: SNOWBALL
-    amount:
-      min: 4
-      max: 8
-    weight: 1
-
-  - type: EGG
-    amount:
-      min: 4
-      max: 8
-    weight: 1
-
-  - type: COOKED_CHICKEN
-    amount: 4
-    weight: 2
-
-  - type: COOKED_MUTTON
-    amount: 4
-    weight: 2
-
-  - type: GOLDEN_CARROT
-    amount: 2
-    weight: 1
-
-  - type: POTION
-    weight: 1
-    potion-type: INSTANT_HEAL
-    level: 1
-
-  - type: POTION
-    weight: 1
-    potion-type: REGENERATION
-    level: 1
-
-  - type: WOODEN_AXE
-    amount: 1
-    weight: 2
-
-  - type: WOODEN_PICKAXE
     amount: 1
     weight: 2
 
@@ -163,6 +36,102 @@ chest-items:
     amount: 1
     weight: 1
 
+  - type: SHIELD
+    amount: 1
+    weight: 1
+
+  - type: BOW
+    amount: 1
+    weight: 1
+
+  - type: CROSSBOW
+    amount: 1
+    weight: 1
+
+  - type: ARROW
+    amount:
+      min: 6
+      max: 12
+    weight: 2
+
+  - type: LEATHER_HELMET
+    amount: 1
+    weight: 2
+
+  - type: LEATHER_CHESTPLATE
+    amount: 1
+    weight: 2
+
+  - type: LEATHER_LEGGINGS
+    amount: 1
+    weight: 2
+
+  - type: LEATHER_BOOTS
+    amount: 1
+    weight: 2
+
+  - type: CHAINMAIL_HELMET
+    amount: 1
+    weight: 1
+
+  - type: CHAINMAIL_CHESTPLATE
+    amount: 1
+    weight: 1
+
+  - type: CHAINMAIL_LEGGINGS
+    amount: 1
+    weight: 1
+
+  - type: CHAINMAIL_BOOTS
+    amount: 1
+    weight: 1
+
+  - type: BREAD
+    amount:
+      min: 3
+      max: 6
+    weight: 3
+
+  - type: COOKED_BEEF
+    amount: 3
+    weight: 3
+
+  - type: COOKED_CHICKEN
+    amount: 3
+    weight: 3
+
+  - type: COOKED_MUTTON
+    amount: 3
+    weight: 3
+
+  - type: BAKED_POTATO
+    amount:
+      min: 3
+      max: 6
+    weight: 2
+
+  - type: APPLE
+    amount:
+      min: 2
+      max: 4
+    weight: 2
+
+  - type: GOLDEN_CARROT
+    amount: 2
+    weight: 1
+
+  - type: SNOWBALL
+    amount:
+      min: 6
+      max: 12
+    weight: 1
+
+  - type: EGG
+    amount:
+      min: 6
+      max: 12
+    weight: 1
+
   - type: COBWEB
     amount:
       min: 1
@@ -172,16 +141,14 @@ chest-items:
   - type: OAK_PLANKS
     amount:
       min: 4
-      max: 8
+      max: 10
     weight: 2
 
-  - type: BAKED_POTATO
-    amount:
-      min: 3
-      max: 6
-    weight: 2
+  - type: FLINT_AND_STEEL
+    amount: 1
+    weight: 1
 
-  - type: BEETROOT_SOUP
+  - type: FISHING_ROD
     amount: 1
     weight: 1
 
@@ -189,12 +156,32 @@ chest-items:
     amount: 1
     weight: 2
 
+  - type: POTION
+    weight: 1
+    potion-type: INSTANT_HEAL
+    level: 1
+
+  - type: POTION
+    weight: 1
+    potion-type: SPEED
+    level: 1
+
+
+# Tier 2 – improved iron gear, better food, utility and light potions
 trapped-chest-items:
   - type: IRON_SWORD
     amount: 1
-    weight: 1
+    weight: 2
 
   - type: IRON_AXE
+    amount: 1
+    weight: 2
+
+  - type: IRON_PICKAXE
+    amount: 1
+    weight: 1
+
+  - type: IRON_SHOVEL
     amount: 1
     weight: 1
 
@@ -216,7 +203,7 @@ trapped-chest-items:
 
   - type: SHIELD
     amount: 1
-    weight: 2
+    weight: 1
 
   - type: BOW
     amount: 1
@@ -224,65 +211,14 @@ trapped-chest-items:
 
   - type: CROSSBOW
     amount: 1
-    weight: 2
-
-  - type: SPECTRAL_ARROW
-    amount: 8
     weight: 1
 
   - type: ARROW
     amount: 16
-    weight: 1
-
-  - type: COOKED_COD
-    amount: 4
     weight: 2
 
-  - type: ENDER_PEARL
-    weight: 1
-    amount: 1
-
-  - type: COMPASS
-    amount: 1
-    weight: 1
-
-  - type: POTION
-    weight: 2
-    potion-type: SPEED
-    level: 2
-
-  - type: POTION
-    weight: 1
-    potion-type: JUMP
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 2
-    potion-type: SPEED
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: JUMP
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: INSTANT_HEAL
-    level: 2
-
-  - type: TIPPED_ARROW
+  - type: SPECTRAL_ARROW
     amount: 8
-    weight: 1
-    potion-type: POISON
-    level: 1
-
-  - type: TNT
-    amount: 2
-    weight: 1
-
-  - type: FLINT_AND_STEEL
-    amount: 1
     weight: 1
 
   - type: COBWEB
@@ -293,21 +229,13 @@ trapped-chest-items:
 
   - type: OAK_PLANKS
     amount:
-      min: 8
+      min: 10
       max: 16
     weight: 1
 
-  - type: IRON_PICKAXE
-    amount: 1
-    weight: 1
-
-  - type: IRON_SHOVEL
-    amount: 1
-    weight: 1
-
-  - type: IRON_AXE
-    amount: 1
-    weight: 1
+  - type: COOKED_COD
+    amount: 4
+    weight: 2
 
   - type: COOKED_SALMON
     amount:
@@ -315,7 +243,35 @@ trapped-chest-items:
       max: 5
     weight: 2
 
+  - type: ENDER_PEARL
+    amount: 1
+    weight: 1
 
+  - type: TNT
+    amount: 2
+    weight: 1
+
+  - type: FLINT_AND_STEEL
+    amount: 1
+    weight: 1
+
+  - type: POTION
+    weight: 1
+    potion-type: SPEED
+    level: 2
+
+  - type: POTION
+    weight: 1
+    potion-type: FIRE_RESISTANCE
+    level: 1
+
+  - type: SPLASH_POTION
+    weight: 1
+    potion-type: INSTANT_HEAL
+    level: 1
+
+
+# Tier 3 – best regular chests; enchanted iron gear, better arrows, support potions
 barrel-items:
   - type: IRON_HELMET
     amount: 1
@@ -323,6 +279,8 @@ barrel-items:
     enchantments:
       - type: PROTECTION
         level: 2
+      - type: UNBREAKING
+        level: 1
 
   - type: IRON_CHESTPLATE
     amount: 1
@@ -330,6 +288,8 @@ barrel-items:
     enchantments:
       - type: PROTECTION
         level: 2
+      - type: UNBREAKING
+        level: 1
 
   - type: IRON_LEGGINGS
     amount: 1
@@ -337,6 +297,8 @@ barrel-items:
     enchantments:
       - type: PROTECTION
         level: 2
+      - type: UNBREAKING
+        level: 1
 
   - type: IRON_BOOTS
     amount: 1
@@ -344,20 +306,37 @@ barrel-items:
     enchantments:
       - type: PROTECTION
         level: 2
+      - type: UNBREAKING
+        level: 1
 
   - type: IRON_SWORD
     amount: 1
     weight: 2
     enchantments:
       - type: SHARPNESS
-        level: 3
+        level: 2
+      - type: UNBREAKING
+        level: 1
 
   - type: IRON_AXE
     amount: 1
     weight: 2
     enchantments:
       - type: SHARPNESS
-        level: 3
+        level: 2
+      - type: UNBREAKING
+        level: 1
+
+  - type: IRON_PICKAXE
+    amount: 1
+    weight: 2
+    enchantments:
+      - type: EFFICIENCY
+        level: 2
+
+  - type: SHIELD
+    amount: 1
+    weight: 2
 
   - type: BOW
     amount: 1
@@ -376,6 +355,10 @@ barrel-items:
   - type: GOLDEN_APPLE
     amount: 1
     weight: 3
+
+  - type: ARROW
+    amount: 24
+    weight: 2
 
   - type: SPECTRAL_ARROW
     amount: 16
@@ -393,109 +376,11 @@ barrel-items:
       max: 24
     weight: 1
 
-  - type: IRON_PICKAXE
-    amount: 1
-    weight: 2
-    enchantments:
-      - type: EFFICIENCY
-        level: 2
-
-  - type: IRON_AXE
-    amount: 1
-    weight: 2
-    enchantments:
-      - type: SHARPNESS
-        level: 2
-
   - type: COOKED_BEEF
     amount:
       min: 6
       max: 10
     weight: 2
-
-  - type: POTION
-    weight: 1
-    potion-type: SPEED
-    level: 2
-
-  - type: POTION
-    weight: 1
-    potion-type: JUMP
-    level: 2
-
-  - type: DIAMOND_HELMET
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: PROTECTION
-        level: 3
-      - type: UNBREAKING
-        level: 2
-
-  - type: DIAMOND_CHESTPLATE
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: PROTECTION
-        level: 3
-      - type: UNBREAKING
-        level: 2
-
-  - type: DIAMOND_LEGGINGS
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: PROTECTION
-        level: 3
-      - type: UNBREAKING
-        level: 2
-
-  - type: DIAMOND_BOOTS
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: PROTECTION
-        level: 3
-      - type: UNBREAKING
-        level: 2
-
-  - type: DIAMOND_SWORD
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: SHARPNESS
-        level: 4
-      - type: FIRE_ASPECT
-        level: 1
-
-  - type: DIAMOND_AXE
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: SHARPNESS
-        level: 4
-
-  - type: BOW
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: POWER
-        level: 3
-      - type: FLAME
-        level: 1
-
-  - type: CROSSBOW
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: MULTISHOT
-        level: 1
-      - type: QUICK_CHARGE
-        level: 3
-
-  - type: GOLDEN_APPLE
-    amount: 2
-    weight: 1
 
   - type: POTION
     weight: 1
@@ -512,279 +397,145 @@ barrel-items:
     potion-type: REGENERATION
     level: 1
 
-
-  - type: POTION
-    weight: 1
-    potion-type: INSTANT_HEAL
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: INSTANT_HEAL
-    level: 2
-
   - type: SPLASH_POTION
     weight: 1
     potion-type: SPEED
     level: 2
 
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: JUMP
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: SLOWNESS
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: WEAKNESS
-    level: 1
-
-  - type: GOLDEN_CARROT
-    amount: 4
-    weight: 3
-
-  - type: COOKED_BEEF
-    amount: 4
-    weight: 3
-
-  - type: FIREWORK_ROCKET
-    weight: 3
-    amount: 16
-    power: 1
-    effects:
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
-
-supply-drop-items:
-  - type: ELYTRA
-    amount: 1
-    weight: 1
-    enchantments:
-      - type: UNBREAKING
-        level: 3
-      - type: BINDING_CURSE
-        level: 1
-
-  - type: POTION
-    weight: 1
-    potion-type: TURTLE_MASTER
-    level: 2
-
-  - type: POTION
-    weight: 1
-    potion-type: STRENGTH
-    level: 2
-
-  - type: POTION
-    weight: 2
-    potion-type: REGEN
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: TURTLE_MASTER
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 1
-    potion-type: STRENGTH
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 2
-    potion-type: INSTANT_DAMAGE
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 2
-    potion-type: POISON
-    level: 2
-
-  - type: SPLASH_POTION
-    weight: 2
-    potion-type: REGEN
-    level: 2
-
-  - type: LINGERING_POTION
-    potion-type: INSTANT_HEAL
-    level: 2
-    extended: false
-    weight: 2
-
-  - type: LINGERING_POTION
-    potion-type: INSTANT_DAMAGE
-    level: 2
-    extended: false
-    weight: 2
-
-  - type: TOTEM_OF_UNDYING
-    amount: 1
-    weight: 3
-
   - type: ENDER_PEARL
-    amount: 4
-    weight: 5
+    amount: 2
+    weight: 1
 
-  - type: TRIDENT
+
+# Supply drops – best but still mid-tier (no diamond/netherite)
+supply-drop-items:
+  - type: IRON_HELMET
     amount: 1
-    weight: 3
+    weight: 2
     enchantments:
-      - type: LOYALTY
+      - type: PROTECTION
+        level: 3
+      - type: UNBREAKING
         level: 2
 
-  - type: ENCHANTED_GOLDEN_APPLE
-    amount: 1
-    weight: 1
-
-  - type: DIAMOND_AXE
+  - type: IRON_CHESTPLATE
     amount: 1
     weight: 2
+    enchantments:
+      - type: PROTECTION
+        level: 3
+      - type: UNBREAKING
+        level: 2
 
-  - type: DIAMOND_SWORD
+  - type: IRON_LEGGINGS
     amount: 1
     weight: 2
+    enchantments:
+      - type: PROTECTION
+        level: 3
+      - type: UNBREAKING
+        level: 2
+
+  - type: IRON_BOOTS
+    amount: 1
+    weight: 2
+    enchantments:
+      - type: PROTECTION
+        level: 3
+      - type: UNBREAKING
+        level: 2
+
+  - type: IRON_SWORD
+    amount: 1
+    weight: 2
+    enchantments:
+      - type: SHARPNESS
+        level: 3
+      - type: UNBREAKING
+        level: 2
+
+  - type: IRON_AXE
+    amount: 1
+    weight: 2
+    enchantments:
+      - type: SHARPNESS
+        level: 3
+      - type: UNBREAKING
+        level: 1
 
   - type: BOW
     amount: 1
     weight: 2
     enchantments:
-      - type: FLAME
-        level: 1
+      - type: POWER
+        level: 3
       - type: PUNCH
-        level: 2
+        level: 1
 
   - type: CROSSBOW
     amount: 1
     weight: 2
     enchantments:
       - type: QUICK_CHARGE
-        level: 3
+        level: 2
       - type: MULTISHOT
         level: 1
 
+  - type: SHIELD
+    amount: 1
+    weight: 2
+
   - type: GOLDEN_APPLE
     amount: 3
-    weight: 5
-
-  - type: DIAMOND_HELMET
-    amount: 1
     weight: 3
 
-  - type: DIAMOND_CHESTPLATE
-    amount: 1
+  - type: ENDER_PEARL
+    amount: 4
     weight: 3
 
-  - type: DIAMOND_LEGGINGS
-    amount: 1
-    weight: 3
-
-  - type: DIAMOND_BOOTS
-    amount: 1
-    weight: 3
-
-  - type: ENCHANTED_BOOK
-    amount: 1
-    weight: 3
-    enchantments:
-      - type: SHARPNESS
-        level: 5
-
-  - type: ENCHANTED_BOOK
-    amount: 1
-    weight: 4
-    enchantments:
-      - type: PROTECTION
-        level: 4
-
-  - type: ENCHANTED_BOOK
-    amount: 1
+  - type: ARROW
+    amount: 32
     weight: 2
-    enchantments:
-      - type: PUNCH
-        level: 2
 
-  - type: ENCHANTED_BOOK
-    amount: 1
-    weight: 2
-    enchantments:
-      - type: FLAME
-        level: 1
+  - type: SPECTRAL_ARROW
+    amount: 24
+    weight: 1
 
-  - type: ENCHANTED_BOOK
-    amount: 1
-    weight: 2
-    enchantments:
-      - type: QUICK_CHARGE
-        level: 3
-
-  - type: FIREWORK_ROCKET
-    weight: 3
+  - type: TIPPED_ARROW
     amount: 16
-    power: 1
-    effects:
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
-      - type: BALL
-        colors:
-          - RED
-          - BLUE
-        fade-colors:
-          - WHITE
-        flicker: true
-        trail: false
+    weight: 1
+    potion-type: POISON
+    level: 1
+
+  - type: COBWEB
+    amount:
+      min: 8
+      max: 12
+    weight: 1
+
+  - type: OAK_PLANKS
+    amount:
+      min: 24
+      max: 32
+    weight: 1
+
+  - type: POTION
+    weight: 1
+    potion-type: STRENGTH
+    level: 2
+
+  - type: SPLASH_POTION
+    weight: 1
+    potion-type: REGENERATION
+    level: 2
+
+  - type: SPLASH_POTION
+    weight: 1
+    potion-type: INSTANT_HEAL
+    level: 2
+
+  - type: LINGERING_POTION
+    potion-type: SLOWNESS
+    level: 1
+    extended: false
+    weight: 1
