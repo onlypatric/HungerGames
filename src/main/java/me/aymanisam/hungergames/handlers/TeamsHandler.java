@@ -108,25 +108,30 @@ public class TeamsHandler {
         player.sendMessage(langHandler.getMessage(player, "team.id", teamId));
 
         String teammateNames = getTeammateNames(team, player);
-        if (!teammateNames.isEmpty()) {
+        boolean hasTeammates = !teammateNames.isEmpty();
+
+        if (hasTeammates) {
             player.sendMessage(langHandler.getMessage(player, "team.members", teammateNames));
-            setupCompassForPlayer(player);
         } else {
             player.sendMessage(langHandler.getMessage(player, "team.no-teammates"));
         }
+
+        setupCompassForPlayer(player, hasTeammates);
     }
 
-    private void setupCompassForPlayer(Player player) {
+    private void setupCompassForPlayer(Player player, boolean hasTeammates) {
         ItemStack item = new ItemStack(Material.COMPASS);
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.displayName(langHandler.getMessageComponent(player, "team.compass-teammate"));
-        meta.addEnchant(Enchantment.UNBREAKING, 1, true);
-        List<Component> lore = new ArrayList<>();
-        lore.add(langHandler.getMessageComponent(player, "team.compass-click"));
-        lore.add(langHandler.getMessageComponent(player, "team.compass-shift-click"));
-        meta.lore(lore);
-        item.setItemMeta(meta);
+        if (hasTeammates) {
+            meta.displayName(langHandler.getMessageComponent(player, "team.compass-teammate"));
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            List<Component> lore = new ArrayList<>();
+            lore.add(langHandler.getMessageComponent(player, "team.compass-click"));
+            lore.add(langHandler.getMessageComponent(player, "team.compass-shift-click"));
+            meta.lore(lore);
+            item.setItemMeta(meta);
+        }
         player.getInventory().setItem(8, item);
     }
 
