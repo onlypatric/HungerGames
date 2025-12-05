@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import static me.aymanisam.hungergames.HungerGames.hgWorldNames;
+
 public class BlockBreakListener implements Listener {
     private final HungerGames plugin;
     private final ConfigHandler configHandler;
@@ -30,7 +32,19 @@ public class BlockBreakListener implements Listener {
             return;
         }
 
+        String worldName = player.getWorld().getName();
+
+        // Only enforce HG block rules in HG-managed worlds
+        if (!hgWorldNames.contains(worldName)) {
+            return;
+        }
+
         FileConfiguration worldConfig = configHandler.getWorldConfig(player.getWorld());
+
+        // If block breaking is not enabled in this world, leave it alone
+        if (!worldConfig.getBoolean("break-blocks.enabled")) {
+            return;
+        }
 
         List<String> allowedStrings = worldConfig.getStringList("break-blocks.allowed-blocks");
 
