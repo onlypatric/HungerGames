@@ -147,6 +147,48 @@ chest-items:
     potion-type: REGENERATION
     level: 1
 
+  - type: WOODEN_AXE
+    amount: 1
+    weight: 2
+
+  - type: WOODEN_PICKAXE
+    amount: 1
+    weight: 2
+
+  - type: WOODEN_SHOVEL
+    amount: 1
+    weight: 1
+
+  - type: STONE_SHOVEL
+    amount: 1
+    weight: 1
+
+  - type: COBWEB
+    amount:
+      min: 1
+      max: 3
+    weight: 2
+
+  - type: OAK_PLANKS
+    amount:
+      min: 4
+      max: 8
+    weight: 2
+
+  - type: BAKED_POTATO
+    amount:
+      min: 3
+      max: 6
+    weight: 2
+
+  - type: BEETROOT_SOUP
+    amount: 1
+    weight: 1
+
+  - type: COMPASS
+    amount: 1
+    weight: 2
+
 trapped-chest-items:
   - type: IRON_SWORD
     amount: 1
@@ -243,6 +285,36 @@ trapped-chest-items:
     amount: 1
     weight: 1
 
+  - type: COBWEB
+    amount:
+      min: 3
+      max: 6
+    weight: 1
+
+  - type: OAK_PLANKS
+    amount:
+      min: 8
+      max: 16
+    weight: 1
+
+  - type: IRON_PICKAXE
+    amount: 1
+    weight: 1
+
+  - type: IRON_SHOVEL
+    amount: 1
+    weight: 1
+
+  - type: IRON_AXE
+    amount: 1
+    weight: 1
+
+  - type: COOKED_SALMON
+    amount:
+      min: 3
+      max: 5
+    weight: 2
+
 
 barrel-items:
   - type: IRON_HELMET
@@ -308,6 +380,38 @@ barrel-items:
   - type: SPECTRAL_ARROW
     amount: 16
     weight: 1
+
+  - type: COBWEB
+    amount:
+      min: 5
+      max: 10
+    weight: 1
+
+  - type: OAK_PLANKS
+    amount:
+      min: 16
+      max: 24
+    weight: 1
+
+  - type: IRON_PICKAXE
+    amount: 1
+    weight: 2
+    enchantments:
+      - type: EFFICIENCY
+        level: 2
+
+  - type: IRON_AXE
+    amount: 1
+    weight: 2
+    enchantments:
+      - type: SHARPNESS
+        level: 2
+
+  - type: COOKED_BEEF
+    amount:
+      min: 6
+      max: 10
+    weight: 2
 
   - type: POTION
     weight: 1
