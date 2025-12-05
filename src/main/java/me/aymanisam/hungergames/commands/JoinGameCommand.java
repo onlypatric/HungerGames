@@ -114,7 +114,16 @@ public class JoinGameCommand implements CommandExecutor {
     public static void teleportPlayerForSpectating(Player player, String worldName, World world, ConfigHandler configHandler, ScoreBoardHandler scoreBoardHandler, LangHandler langHandler) {
         if (configHandler.getPluginSettings().getBoolean("spectating")) {
             assert world != null;
-            player.teleport(world.getSpawnLocation());
+            // Move spectator to a safe, high spawn location
+            Location spawn = world.getSpawnLocation();
+            Location safeSpawn = world.getHighestBlockAt(spawn).getLocation().add(0.5, 1, 0.5);
+            player.teleport(safeSpawn);
+            player.setHealth(player.getHealthScale() == 0 ? player.getHealth() : player.getHealthScale());
+            player.setFoodLevel(20);
+            player.setFireTicks(0);
+            player.setAllowFlight(true);
+            player.setFlying(true);
+            player.setInvulnerable(true);
             if (gameStarted.getOrDefault(worldName, false)) {
                 scoreBoardHandler.createBoard(player);
             }
